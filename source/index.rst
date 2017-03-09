@@ -27,5 +27,6 @@ Table des matières
    json/index.rst
    io/index.rst
    super/index.rst
-
+   random/index.rst
+	
    licence.rst
