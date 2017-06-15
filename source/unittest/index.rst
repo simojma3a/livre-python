@@ -1,8 +1,8 @@
 .. _unittest-tutorial:
 
-===================================
-``unittest``, ``doctest``, ``mock``
-===================================
+==========================
+``unittest`` / ``doctest``
+==========================
 
 Introduction
 ============
@@ -17,7 +17,7 @@ Unittest
 
 Le framework :py:mod:`unittest` a été à l'origine inspiré par JUnit_ et le fonctionnement est similaire aux frameworks de tests unitaires dans d'autres langages de programmation.
 
-Pour réaliser des tests unitaires, unittest s'appuie sur 4 concepts importants:
+Pour réaliser des tests unitaires, unittest s'appuie sur quatres concepts importants:
 
 - *test fixture* : un 'test fixture' représente la préparation nécessaire pour réaliser un test. Tout comme par exemple la création temporaire de base de données, dossiers ou même le démarrage de services.
 - *test case* : consiste à tester une fonctionnalité précise, et ainsi tester que la sortie corresponde bien à un résultat attendu.
@@ -32,19 +32,19 @@ Création d'un test unitaire
 
 Voici les étapes nécessaires pour créer un test unitaire:
 
-1)  Importer le module 'unittest'
+1.  Importer le module 'unittest'
 
     .. code-block:: python
 
         import unittest
 
-2)  Définir la fonction à tester ou l'importer depuis un module. Ici on prend l'exemple avec la fonction carre(x):
+2.  Définir la fonction à tester ou l'importer depuis un module. Ici on prend l'exemple avec la fonction carre(x):
 
     .. literalinclude:: examples/carre.py
        :start-after: func:carré
        :end-before: endfunc:carré
 
-3)  Créer une classe en héritant de :py:class:`unittest.TestCase`, puis écrire les tests sous forme de méthodes. Les noms des méthodes doivent impérativement commencer par 'test' afin d'indiquer au 'test runner' quelles sont les méthodes de tests.
+3.  Créer une classe en héritant de :py:class:`unittest.TestCase`, puis écrire les tests sous forme de méthodes. Les noms des méthodes doivent impérativement commencer par 'test' afin d'indiquer au 'test runner' quelles sont les méthodes de tests.
 
     De plus, chaque test doit appeller une fonction assertion de la classe TestCase. La classe TestCase possède plusieurs types de 'assert'. Ici nous utiliseront 'assertEquals()' qui permet de comparer deux valeurs (valeur retournée par la fonction et la valeur attendue).
 
@@ -52,7 +52,7 @@ Voici les étapes nécessaires pour créer un test unitaire:
        :start-after: class:TestCase
        :end-before: endclass:TestCase
 
-4)  Exécuter les tests :
+4.  Exécuter les tests :
 
     - en appelant la fonction :py:func:`unittest.main`
 
@@ -74,7 +74,7 @@ Voici les étapes nécessaires pour créer un test unitaire:
 
         $ python -m unittest discover
 
-5)  Analyser la sortie du test:
+5.  Analyser la sortie du test:
 
     .. code-block:: console
 
@@ -102,7 +102,7 @@ Ce chapitre présentera les classes et méthodes définies dans le module unitte
 TestCase Classe
 ////////////////
 
-Une classe qui hérite de TestCase doit contenir toutes les méthodes nécessaires permettant de tester une seule et unique fonctionnalité.
+Une classe qui hérite de :py:class:`~unittest.TestCase` doit contenir toutes les méthodes nécessaires permettant de tester une seule et unique fonctionnalité.
 
 Voici quelques méthodes utiles définies dans TestCase:
 
@@ -175,63 +175,45 @@ On constate bien que le message d'erreur spécifié au moment de l'assert, est a
 TestSuite Class
 ///////////////
 
-Chaque instance de 'testCase' peut être regroupée selon la fonctionnalité du programme qu'elle teste. Ce mécanisme est mis à disposition grâce à la classe 'TestSuite'.
+Chaque instance de ``TestCase`` peut être regroupée selon la fonctionnalité du programme qu'elle teste. Ce mécanisme est mis à disposition grâce à la classe :py:class:`unittest.TestSuite`.
 
-voici les étapes pour regrouper un 'TestSuite':
+Voici les étapes pour regrouper un 'TestSuite':
 
-1) Créer une instance de 'TestSuite'
+1. Créer une instance de 'TestSuite':
 
 .. code-block:: python
 
     suite = unittest.TestSuite()
 
-2) Ajouter le 'testCase' avec la méthode addTest() ou  makeSuite():
+2. Ajouter le 'testCase' avec la méthode addTest(). Voici l'exemple avec   'class CarreTestCase(unittest.TestCase)':
 
-.. todo::
+.. code-block:: python
 
-    Le code suivant n'est pas du Python.
+    suite.addTest(CarreTestCase())
 
-    .. code-block:: text
-
-        suite.addTest(testcase class)
-        suite = unittest.makeSuite(testcase class)
-
-3) Créer une instance de la class TestTestRunner:
+3. Créer une instance de la class TestTestRunner:
 
 .. code-block:: python
 
     runner = unittest.TextTestRunner()
 
-4) Appeller la méthode run() pour exécuter tous les tests
+4. Appeller la méthode :py:meth:`unittest.TextTestRunner.run` pour exécuter tous les tests:
 
 .. code-block:: python
 
     runner.run(suite)
 
-Mock
-====
-
-**TODO**
-
-.. todo::
-
-    Vous avez pas mal de contenu déjà, renforcez-le si nécessaire mais il ça me parait difficile d'explorer :py:mod:`unittest.mock`.
-
 Doctest
 =======
 
-Un autre standard pour les tests unitaires en Python est: :py:mod:`doctest`. Ce concepte de test passe par l'utilisation des docstrings tout comme l'écriture de documentation.
+Un autre standard pour les tests unitaires en Python est: :py:mod:`doctest`. Ce concept de test passe par l'utilisation des docstrings tout comme l'écriture de documentation. L'idée des doctest est de mettre ses tests dans sa documentation afin de s'assurer que les exemples dans la documentation fonctionnent.
 
 .. glossary::
 
-    Docstring
-        Une docstring est essentiellement une chaîne de caractères. Elle commence et termine par trois guillemets. De plus l'indentation d'une docstring est importante car elle dépend directement de l'indentation de la classe ou de la méthode qu'elle documente.
+Docstring:
+    Les docstrings sont des chaînes de documentation qui doivent être placées en dessous des définitions de méthodes, fonctions, classe ou au début d'un module. De plus l'indentation d'une docstring est importante car elle dépend directement de l'indentation de la classe ou de la méthode qu'elle documente.
 
-.. todo::
 
-    une docstring c'est juste une chaine de caractère pour documenter une fonction, variable, classe, etc. Le triple guillemets est un choix esthétique.
-
-    L'idée des doctest est de mettre ses tests dans sa documentation afin de s'assurer que les exemples dans la documentation fonctionnent.
 
 Création d'un test unitaire
 ---------------------------
@@ -244,7 +226,7 @@ Voici un exemple avec la fonction carré:
         :start-after: func:carré
         :end-before: endfunc:carrée
 
-Ensuite pour éxécuter le(s) test(s), il faut importer le module doctest (ici fait dans le 'main'). Ensuite il faut appeller la méthode testmod() du module doctest qui va parser le fichier entier à la recherche de docstrings. Une fois la recherche effectué, il éxécute tout les tests qu'il a trouvé.
+Ensuite pour exécuter le(s) test(s), il faut importer le module doctest (ici fait dans le 'main'). Ensuite il faut appeller la méthode testmod() du module doctest qui va parser le fichier entier à la recherche de docstrings. Une fois la recherche effectuée, il exécute tous les tests qu'il a trouvé.
 
 .. literalinclude:: examples/doctest_example.py
         :start-after: main
@@ -288,5 +270,13 @@ Ce qui produirait le résultat suivant:
     3 tests in 2 items.
     3 passed and 0 failed.
     Test passed.
+
+Conclusion
+==========
+
+L'écriture des tests est une pratique primordiale afin d'apporter un gain en qualité du logiciel et en maintenance.
+De plus l'écriture des tests n'est pas difficile en soi, ni même longue comme vous avez pu le constater dans ce tutoriel. Afin d'écrire efficacement des tests unitaires, il faut de la pratique, cependant mieux vaut des tests "peu efficaces" que de ne pas en écrire. Pour terminer, s'il y a bien une chose à retenir de ce tutoriel c'est qu'il n'y a pas de désavantages à en écrire, c'est pour cela que je vous invite à vous y mettre dès demain!
+
+
 
 .. _Junit: http://junit.org/junit4/

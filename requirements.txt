@@ -1,10 +1,15 @@
 Sphinx
+sphinxcontrib-trio
+
+# colorama
+colorama
 
 # Invoke
 invoke
 
 # QA
 isort
+flake8
 pycodestyle
 pydocstyle
 rstcheck
@@ -14,6 +19,21 @@ jsonschema
 msgpack-python
 ijson
 
+# matplotlib
+matplotlib
+
+# networkx
+networkx
+
 # PIL
 Pillow
-#PyQt5
+PyQt5
+
+# pycrypto
+pycrypto
+
+# pygame
+pygame
+
+# watchdog
+watchdog
